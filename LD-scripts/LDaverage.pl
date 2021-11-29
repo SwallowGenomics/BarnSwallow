@@ -3,7 +3,7 @@ use warnings;
 use strict;
 my $num_args = $#ARGV + 1;
 if ($num_args != 2) {
-    print "\nmissing parameter(s)\nUsage: $0 <input_filename> <bin-size(bp)>\n\n";
+    print "\nmissing parameter(s)\nUsage: $0 <input-filename> <bin-size(bp)>\n\n";
     exit;
 }
 
