@@ -1,7 +1,10 @@
+#This pipeline will download raw genomic data directly from NCBI public database, perform quality control and align them to the reference genome
+#usage: bash pipeline.sh Acclist.txt
+#Acclist.txt is a text file with all Accession numbers (SRR...) of the genomic data to download from the NCBI public archive
+
+
 #!/bin/bash
 
-#usage: bash pipeline.sh Acclist.txt 
-#Acclist.txt is a text file with all Acession numbers (SRR...) of the genomic data to download
 
 input=$1
 
@@ -55,9 +58,9 @@ for f in "${a[@]}" ; do
 		
 	fi
 	
-#Adapters trimming	
+#If adapters contamination was detected after quality control, perform adapters trimming	
 	
-	if ! [[ -e ${f}/trimmed_${f}_1.fastq ]] || ! [[ -e ${f}/trimmed_${f}_2.fastq ]]  ; then
+	if ! [[ -e ${f}/trimmed_${f}_1.fastq ]] || ! [[ -e ${f}/trimmed_${f}_2.fastq ]] ; then
 	
 		bbduk.sh in1=${f}/${f}_1.fastq in2=${f}/${f}_2.fastq out1=${f}/trimmed_${f}_1.fastq out2=${f}/trimmed_${f}_2.fastq ref=.../bin/bbmap/resources/adapters.fa ktrim=r k=23 mink=11 hdist=1 tpe tbo stats="${f}/${f}_bbduk.out"
 		
@@ -79,7 +82,7 @@ for f in "${a[@]}" ; do
 	
 	fi
 
-#perform quality control after adapters trimming		
+#re-perform quality control after adapters trimming		
 		
 	if ! [[ -e ${f}/QC2 ]] ; then	
 	
@@ -111,7 +114,7 @@ for f in "${a[@]}" ; do
 		
 	fi
 	
-#alignment
+#perform reads alignment
 	
 	if ! [[ -e ${f}/alignment ]]; then
 
@@ -126,7 +129,7 @@ for f in "${a[@]}" ; do
 	if ! [[ -e ${f}/alignment/${f}.bam ]]; then
 	
 	
-		bowtie2 -x ref_index -1 ${f}/trimmed_${f}_1.fastq -2 ${f}/trimmed_${f}_2.fastq -p 2 --rg "SM:${f}" --rg-id "${f}" | samtools view -@ 16 -bS - > "${f}/alignment/${f}.bam"
+		bowtie2 -x ref_index -1 ${f}/trimmed_${f}_1.fastq -2 ${f}/trimmed_${f}_2.fastq -p 2 --rg "SM:${f}" --rg-id "${f}" | samtools view -@ 16 -bS - > ${f}/alignment/${f}.bam
 	
 	else
 	
@@ -143,15 +146,15 @@ for f in "${a[@]}" ; do
 		echo "${f}/alignment/${f}.bam does not exist"
 		
 	fi
-	
-#alignment sorting and stats	
+
+#alignment sorting and stats; remove unmapped reads
 
 	if ! [[ -e ${f}/alignment/${f}_sorted.bam ]]; then
 
-		samtools sort "${f}/alignment/${f}.bam" -o "${f}/alignment/${f}_sorted.bam" -@ 2
+		samtools sort ${f}/alignment/${f}.bam -o ${f}/alignment/${f}_sorted.bam -@ 2
 		
 		
-		samtools stats "${f}/alignment/${f}_sorted.bam" 1> "${f}/alignment/${f}_stats.out" 
+		samtools stats ${f}/alignment/${f}_sorted.bam 1> ${f}/alignment/${f}_stats.out
 
 
 		if [[ -s ${f}/alignment/${f}_sorted.bam ]]; then
@@ -173,23 +176,75 @@ for f in "${a[@]}" ; do
 	
 	else 
 	
-		echo "${f}/alignment/${f}_sorted.bam" already exists
+		echo "${f}/alignment/${f}_sorted.bam already exists"
 		
 	fi
 
-#if data are paired end, clip overlaps between paired reads
 
-	bam clipOverlap --in "${f}/alignment/${f}_sorted.bam" --out "${f}/alignment/${f}_sorted_clipped.bam" --stats 2> "${f}/alignment/${f}_clipstats.out"
+#index bam file
+
+if ! [[ -e ${f}/alignment/${f}_sorted.bam.bai ]]; then
+		
+        samtools index ${f}/alignment/${f}_sorted.bam
+          
+    else
+	
+		echo "${f}/alignment/${f}_sorted.bam.bai already exists"
+		
+	fi
+
+#Remove duplicated reads (this step was not not applied to ddRAD data)
+
+    if ! [[ -e ${f}/alignment/${f}_sorted_rmdup.bam ]]; then
 		
 
-	if [[ -s ${f}/alignment/${f}_sorted_clipped.bam ]]; then
+       picard MarkDuplicates -REMOVE_DUPLICATES true -I ${f}/alignment/${f}_sorted.bam -O ${f}/alignment/${f}_sorted_rmdup.bam -M ${f}/alignment/${f}_sorted_rmdup_metrics.txt
+
+    else
+	
+		echo "${f}/alignment/${f}_sorted_rmdup.bam already exists"
+		
+	fi
+
+#Clip overlaps between paired reads (this step was applied only to paired-end data)
+
+    if ! [[ -e ${f}/alignment/${f}_sorted_rmdup_clipped.bam ]]; then
+	
+	bam clipOverlap --in ${f}/alignment/${f}_sorted_rmdup.bam --out ${f}/alignment/${f}_sorted_rmdup_clipped.bam --stats 2> ${f}/alignment/${f}_clipstats.out
+		
+	else
+	
+		echo "${f}/alignment/${f}_sorted_rmdup_clipped.bam already exists"
+		
+	fi
+
+#remove intermediate files
+
+
+	if [[ -s ${f}/alignment/${f}_sorted_rmdup_clipped.bam ]]; then
 	
 		rm ${f}/alignment/${f}_sorted.bam
+		rm ${f}/alignment/${f}_sorted_rmdup.bam
 
 	else
 	
-		echo "${f}/alignment/${f}_sorted.bam does not exist"
+		echo "${f}/alignment/${f}_sorted_rmdup_clipped.bam does not exist"
 	
 	fi
+
+
+#re-index bam file
+
+    if ! [[ -e ${f}/alignment/${f}_sorted_rmdup_clipped.bam.bai ]]; then
+		
+
+        samtools index ${f}/alignment/${f}_sorted_rmdup_clipped.bam
+  
+    else
+	
+		echo "${f}/alignment/${f}_sorted_rmdup_clipped.bam.bai already exists"
+		
+	fi
+
 
 done
