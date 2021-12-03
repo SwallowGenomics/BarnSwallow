@@ -5,7 +5,7 @@ library(karyoploteR)
 library(readxl)
 
 
-#custom genome
+#generate custom genome
 custom.genome <- toGRanges("chr_list.txt")
 
 
