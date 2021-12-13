@@ -65,7 +65,7 @@ manhattanplot(egy_wgs_chr6_ihs, mrk = egy_FDR_markers, cex=0.3, mrk.lab.cex =0, 
 axis(2, seq(-8,8,2), las=2, cex.axis=2)
 
 
-##H. r. erythtrogaster
+##H. r. erythrogaster
 #read in vcf file
 ame_wgs_chr6 <- data2haplohh(hap_file = "ame/SUPER_6_ame_WGS_phased_nomiss.vcf.gz",
                              polarize_vcf = FALSE,
