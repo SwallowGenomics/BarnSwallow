@@ -6,7 +6,7 @@ library(readxl)
 rm(list = ls())
 
 
-##H. r. savignii population
+##H. r. savignii populati
 #read in vcf file
 egy_wgs_chr6 <- data2haplohh(hap_file = "egy/SUPER_6_egy_WGS_phased_nomiss.vcf.gz",
                          polarize_vcf = FALSE,
