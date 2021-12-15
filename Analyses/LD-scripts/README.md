@@ -8,5 +8,6 @@ Use the command `perl LDaverage.pl <example_inputfile.ld> <bin-size(bp)>` to run
 
 [chr_ld.pl](https://github.com/SwallowGenomics/BarnSwallow/blob/main/Analyses/LD-scripts/chr_ld.pl) computes the average LD value over non-overlapping windows. A minimum number of markers per bin can be specified (default 40). 
 Use the command `perl chr_ld.pl <example_inputfile.ld> <bin size(bp)> <minimum marker pairs>` to run this script. <br />
+Output columns are chromosome_name, bin_start_pos, bin_end_pos, avg_r2, avg_D-value, #of_marker-pairs_in_bin.
 
 The file [example_inputfile.ld](https://github.com/SwallowGenomics/BarnSwallow/blob/main/Analyses/LD-scripts/example_inputfile.ld) is provided as an example of input file for those scripts.
