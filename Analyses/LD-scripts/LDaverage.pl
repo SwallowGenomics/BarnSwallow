@@ -1,6 +1,11 @@
 #!/usr/bin/perl -w
 use warnings;
 use strict;
+##############################################################
+###                                                        ###
+###    Syntax: LDaverage.pl <input_filename> <bin_size>    ###
+###                                                        ###
+##############################################################
 my $num_args = $#ARGV + 1;
 if ($num_args != 2) {
     print "\nmissing parameter(s)\nUsage: $0 <input-filename> <bin-size(bp)>\n\n";
