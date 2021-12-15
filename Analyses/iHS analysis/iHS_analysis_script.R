@@ -6,7 +6,7 @@ library(readxl)
 rm(list = ls())
 
 
-##H. r. savignii populati
+##H. r. savignii population
 #read in vcf file
 egy_wgs_chr6 <- data2haplohh(hap_file = "egy/SUPER_6_egy_WGS_phased_nomiss.vcf.gz",
                          polarize_vcf = FALSE,
@@ -65,7 +65,7 @@ manhattanplot(egy_wgs_chr6_ihs, mrk = egy_FDR_markers, cex=0.3, mrk.lab.cex =0, 
 axis(2, seq(-8,8,2), las=2, cex.axis=2)
 
 
-##H. r. erythrogaster
+##H. r. erythrogaster population
 #read in vcf file
 ame_wgs_chr6 <- data2haplohh(hap_file = "ame/SUPER_6_ame_WGS_phased_nomiss.vcf.gz",
                              polarize_vcf = FALSE,
@@ -121,7 +121,7 @@ manhattanplot(ame_wgs_chr6_ihs, mrk = ame_FDR_markers, cex=0.3, mrk.lab.cex =0, 
 axis(2, seq(-8,8,2), las=2, cex.axis=2)
 
 
-##H. r. gutturalis
+##H. r. gutturalis population
 #read in vcf file
 gutturalis_chr6 <- data2haplohh(hap_file = "gutturalis/gutturalis_SUPER_6_phased_nomiss.vcf.gz",
                              polarize_vcf = FALSE,
@@ -175,7 +175,7 @@ manhattanplot(gutturalis_chr6_ihs, mrk = gutt_FDR_markers, cex=0.3, mrk.lab.cex 
 axis(2, seq(-8,8,2), las=2, cex.axis=2)
 
 
-##H. r. rustica
+##H. r. rustica population
 #read in vcf file
 rustica_chr6 <- data2haplohh(hap_file = "rustica_rustica/rustica_SUPER_6_phased_nomiss.vcf.gz",
                                 polarize_vcf = FALSE,
