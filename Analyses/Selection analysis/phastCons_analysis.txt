@@ -1,1 +1,53 @@
-#jddkkd
+#1. Generate a fasta for each scaffold in the genome. Mantain only the chromosome ones.
+
+faSplit byname genome.fasta .
+
+#2. Split the alignments into small fragments
+
+mkdir -p CHUNKS            # put fragments here
+for file in no_header/*.maf ; do
+	root=$(basename "$file" .maf)
+    msa_split $file --in-format MAF --refseq $root.fa --windows 1000000,0 --out-root CHUNKS/$root --out-format SS --min-informative 1000 --between-blocks 5000 
+done
+		
+#3. Select random chunks
+
+ls chr*.*.ss | chooseLines -k 200 - > random-sample.txt
+
+#4. Estimate conserved and non conserved models starting from an initial model (estimated with neautral_model_estimation.txt) and initial parameters
+mkdir -p TREES     # put estimated tree models here
+for file in `cat random-sample.txt` ; do 
+	root=`basename $file .ss`
+	phastCons --target-coverage 0.174 --expected-length 12 --gc 0.425 --estimate-trees TREES/$root $file nonconserved_4d.mod --no-post-probs
+done
+
+
+#4. Combine the separately estimated models by averaging using phyloBoot:
+
+ls TREES/*.cons.mod > cons.txt
+phyloBoot --read-mods '*cons.txt' --output-average ave.cons.mod 
+
+ls TREES/*.noncons.mod > noncons.txt
+phyloBoot --read-mods '*noncons.txt' --output-average ave.noncons.mod 
+
+#5. Predict conserved elements and conservation scores on each chunk using the combined models:
+
+mkdir -p MOST_CONS WIG_SCORES
+for file in chr*.*.ss ; do 
+    root=`basename $file .ss` 
+    phastCons --target-coverage 0.174 --expected-length 12 --most-conserved MOST_CONS/$root.bed --score $file ave.cons.mod,ave.noncons.mod > WIG_SCORES/$root.wig
+done
+
+#6. Calculate coverage and smoothing. We want to adjust the tuning parameters such that 65-70% of bases in coding exons are covered by conserved elements and the PIT is 10 bits.
+
+#coverage
+awk '{ sum += $3-$2; n++ } END { print sum ; }' CDS.bed #e.g. 81925688 bp tot
+bedtools intersect -wao -a CDS.bed  -b most-conserved.bed > COVERAGE_CDS.bed 
+awk '{ sum += $11; n++ } END { print sum / 81925688; }' COVERAGE_CDS_intersect1.bed 
+#e.g. 0.733135
+
+#smoothing
+consEntropy 0.174 12 ave.cons1.mod ave.noncons1.mod
+#e.g. Phylogenetic information threshold: PIT=L_min*H=11.870348 bits
+
+#the coverage is too high, and also the smoothing. Repeat steps 4 to 6 until the desired amoothing and coverage are reached. For step 4, use the estimated non converved model from the previous attempt.
