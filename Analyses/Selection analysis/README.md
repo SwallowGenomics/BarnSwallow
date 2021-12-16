@@ -12,5 +12,5 @@ Steps were taken from [PHASTCONS HOW TO](http://compgen.cshl.edu/phast/phastCons
 
 [phyloP_analysis.txt](phyloP_analysis.txt) contains the steps used to detect conserved and accelerated sites in the barn swallow genome using [phyloP](http://compgen.cshl.edu/phast/help-pages/phyloP.txt).
 
-Other tools used are: [hal2maf](https://github.com/ComparativeGenomicsToolkit/hal/blob/master/maf/impl/hal2maf.cpp), [maf_stream](https://github.com/joelarmstrong/maf_stream) and [msa_view](http://compgen.cshl.edu/phast/help-pages/msa_view.txt), 
+Other tools used were: [hal2maf](https://github.com/ComparativeGenomicsToolkit/hal/blob/master/maf/impl/hal2maf.cpp), [maf_stream](https://github.com/joelarmstrong/maf_stream) and [msa_view](http://compgen.cshl.edu/phast/help-pages/msa_view.txt), 
 
