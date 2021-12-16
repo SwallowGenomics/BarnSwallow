@@ -1,1 +1,59 @@
-#jjs
+#the neutral model used is the same estimated from neutral_model_estimation.txt
+
+#1. calculate phyloP values base wise for each separate chromosome. Use MAFs extracted and processed with maf_stream in phastCons_analysis.txt.
+
+phyloP --method LRT --wig-scores --mode CONACC --msa-format MAF nonconserved_4d.mod chr1.maf > PhyloP_chr1.wig
+
+#2. Convert the wig files in bed and combine them 
+
+for file in PhyloP_SUPER*.wig ; do 
+   root=$(basename "$file" .wig) 
+   wig2bed < $file > $root.bed  
+done
+
+cat *bed > phyloP_basewise.bed
+
+#3. Apply the FDR correction using the script 4fold_FDR.R
+
+#No bases were detected as significant
+
+#4. Extract coordinates from each phyloP base wise bed file to obtain only the aligned coordinates and merge them.  
+
+for file in PhyloP_chr*.bed ; do 
+   root=$(basename "$file" .bed) 
+   awk -v OFS='\t' '{print $1,$2,$3}' $file > $root.aligned_coords.bed  
+done
+
+for file in PhyloP_chr*aligned_coords.bed ; do 
+   root=$(basename "$file" .bed) 
+   bedtools merge -i $file > $root.merged.bed  
+done
+
+#5. Generate 10 bp windows of the aligned coordinates
+
+for file in base_wise/PhyloP_chr*merged.bed ; do 
+   root=$(basename "$file" .aligned_coords.merged.bed ) 
+   bedtools makewindows -b $file -w 10 > $root.10bp.bed
+done
+
+#6. Repeat phyloP analysis on the 10 bp windows on each chromosome separately. An example:
+
+phyloP --method LRT --mode CONACC --features PhyloP_chr1.10bp.bed --msa-format MAF -g nonconserved_4d.mod chr1.maf > PhyloP_chr1.gff
+
+#7. Convert the gff files in bed and merge them:
+
+for file in PhyloP_chr*.gff ; do 
+   root=$(basename "$file" .gff) 
+   awk '{print $1, $4, $5, $6}' $file > $root.bed 
+done
+
+cat *.gff > phyloP_10bp.bed
+
+#8. Apply the FDR correction using the script 4fold_FDR.R and generate two files for accelerated and conserved sites
+
+#9. Remove windows that overlaps with gaps
+
+bedtools subtract -A -a PhyloP_10bp_ACC.bed -b GAPS.bed > PhyloP_10bp_ACC_NO_GAPS.bed 
+bedtools subtract -A -a PhyloP_10bp_CONS.bed -b GAPS.bed > PhyloP_10bp_ACC_NO_GAPS.bed 
+
+#10. Add id for each window using add_id_phyloP.R (needed for Extended Data Fig. 4 panel a and b) 

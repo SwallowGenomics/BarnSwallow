@@ -50,4 +50,13 @@ awk '{ sum += $11; n++ } END { print sum / 81925688; }' COVERAGE_CDS_intersect1.
 consEntropy 0.174 12 ave.cons1.mod ave.noncons1.mod
 #e.g. Phylogenetic information threshold: PIT=L_min*H=11.870348 bits
 
-#the coverage is too high, and also the smoothing. Repeat steps 4 to 6 until the desired amoothing and coverage are reached. For step 4, use the estimated non converved model from the previous attempt.
+#the coverage is too high, and also the smoothing. Repeat steps 4 to 6 until the desired smoothing and coverage levels are reached. For step 4, use the estimated non converved model from the previous attempt.
+
+#7. Remove CEs that overlap for more than 20% with genomic gaps
+
+bedtools subtract -A -f 0.2 -a most-conserved.bed -b GAPS.bed > most-conserved_NO_GAPS.bed
+
+#8. Remove any remaining bases that fell into gaps
+
+bedtools subtract -a most-conserved_NO_GAPS.bed -b GAPS.bed > conserved_NO_GAPS_FINAL.bed 
+ 
