@@ -1,6 +1,6 @@
 ## Cactus alignment
 
-This folder contains the species and tree input for Cactus ([SeqFile.txt](SeqFile.txt)). <br />
+This folder contains the species and tree input file for Cactus ([SeqFile.txt](SeqFile.txt)). <br />
 
 Cactus was run with this command:
 

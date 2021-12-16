@@ -1,0 +1,39 @@
+#1. Extract a MAF for each barn swallow chromosome. An example:
+hal2maf --noAncestors --onlyOrthologs --refGenome Hirundo_rustica --refSequence chr1 --targetGenomes Camarhynchus_parvulus,Gallus_gallus,Lonchura_striata,Molothrus_ater,Motacilla_alba,Taeniopygia_guttata,Passer_domesticus 10_genomes.hal chr1_raw.maf
+
+#2. Run maf_stream on each MAF. An example:
+
+maf_stream merge_dups consensus chr1_raw.maf chr1.maf 
+
+#3. Remove MAF header. An example:
+
+mkdir no_header
+tail -n+3 chr1.maf > no_header/chr1.maf #don't change MAF name. The next steps consider the entire root name before .maf as chromosome name
+
+#4. Estract CDS from the gff3 annotation file
+awk '$3=="CDS"' annotation.gff > CDS.gff
+
+#5. Add the prefix used in the Cactus alignment and, therefore, in the MAF files, to the chromosome names in the CDS gff3 file (e.g. Hirundo_rustica.chr1)
+
+#6. Generate a gff3 file for each chromosome starting from the CDS annotation gff3 file
+
+#7. Extract 4d sites from the MAF files. An example:
+
+msa_view no_header/chr1.maf --in-format MAF --4d --features chr1.gff > chr1_codons.ss
+
+#8. Extract just the 4d sites (in the 3rd codon positions). An example:
+
+msa_view chr1_codons.ss --in-format SS --out-format SS --tuple-size 1 > chr1_sites.ss 
+
+#9. Combine all the 4d sites: 
+msa_view --unordered-ss --out-format SS --aggregate Hirundo_rustica,Camarhynchus_parvulus,Gallus_gallus,Molothrus_ater,Motacilla_alba,Lonchura_striata,Taeniopygia_guttata,Passer_domesticus *_sites.ss > ALL_4d.sites.ss
+
+#10. Estimate a phylogenetic model from the pooled data:
+
+phyloFit --subst-mod REV --EM --tree "(Gallus_gallus:98.0429,((Hirundo_rustica:43.7,(Ficedula_albicollis:42.7783,Parus_major:42.7783)Anc4:0.921704)Anc2:0,(Camarhynchus_parvulus:38,((Passer_domesticus:34.8,(Molothrus_ater:24.0678,Motacilla_alba:24.0678)Anc8:10.7322)Anc6:0,(Lonchura_striata:10.1236,Taeniopygia_guttata:10.1236)Anc7:24.6764)Anc5:3.2)Anc3:5.7)Anc1:54.3429)Anc0;" --msa-format SS --out-root nonconserved_4d ALL_4d.sites.ss
+
+
+
+
+
+
