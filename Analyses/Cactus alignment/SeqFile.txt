@@ -1,0 +1,12 @@
+(Gallus_gallus:98.04286929,((Hirundo_rustica:43.70000000,(Ficedula_albicollis:42.77829604,Parus_major:42.77829604):0.92170396):0.00000000,(Camarhynchus_parvulus:38.00000000,((Passer_domesticus:34.80000000,(Molothrus_ater:24.06782500,Motacilla_alba:24.06782500):10.73217500):0.00000000,(Lonchura_striata:10.12359500,Taeniopygia_guttata:10.12359500):24.67640500):3.20000000):5.70000000):54.34286929);
+
+Gallus_gallus  /storage/users/secomandis/CACTUS_10_genomes/GCF_016699485.2_bGalGal1.mat.broiler.GRCg7b_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Camarhynchus_parvulus /storage/users/secomandis/CACTUS_10_genomes/GCF_901933205.1_STF_HiC_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Ficedula_albicollis /storage/users/secomandis/CACTUS_10_genomes/GCF_000247815.1_FicAlb1.5_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Lonchura_striata /storage/users/secomandis/CACTUS_10_genomes/GCF_005870125.1_lonStrDom2_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Molothrus_ater /storage/users/secomandis/CACTUS_10_genomes/GCF_012460135.1_BPBGC_Mater_1.0_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Motacilla_alba /storage/users/secomandis/CACTUS_10_genomes/GCF_015832195.1_Motacilla_alba_V1.0_pri_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Taeniopygia_guttata /storage/users/secomandis/CACTUS_10_genomes/GCF_008822105.2_bTaeGut2.pat.W.v2_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Parus_major /storage/users/secomandis/CACTUS_10_genomes/GCF_001522545.3_Parus_major1.1_genomic_unmasked_winmask_repmask_bedtools_mod.fasta
+Hirundo_rustica /storage/users/secomandis/CACTUS_10_genomes/bHirRus1.pri.cur.20200211_2.3_unmasked_winmask_repmask_bedtools.fasta
+Passer_domesticus /storage/users/secomandis/CACTUS_10_genomes/GCA_001700915.1_Passer_domesticus-1.0_genomic_winmask_repmask_bedtools.fasta
