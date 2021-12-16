@@ -1,0 +1,43 @@
+#keep only biallelic SNPs
+bcftools view -m2 -M2 -v snps -Ob -o rustica_filtered1.bcf rustica.vcf
+
+#filter for QUAL field
+bcftools view -i 'QUAL>30' -Ob -o rustica_filtered2.bcf rustica_filtered1.bcf
+
+##filter for INFO/DP (we want to set as maximum value twice the mean read depth across samples)
+#first we extract INFO/DP column
+
+bcftools query -f '%INFO/DP\n' rustica_filtered2.bcf > DP_rustica_filtered2
+
+#calculate the mean value (684.286)
+awk '{ total += $1; count++ } END { print total/count }' DP_rustica_filtered2
+
+#filtering command
+bcftools view -i 'INFO/DP<1369' -Ob -o rustica_filtered3.bcf rustica_filtered2.bcf
+
+##filter for FMT/quality 
+#mark genotypes where QR (quality reference) and QA (quality alternate) values are lower than 30 as missing genotypes (both conditions verified int the same sample)
+bcftools filter -S . -e 'FMT/QR<30 & FMT/QA<30' -Ob -o rustica_filtered4.bcf rustica_filtered3.bcf
+
+###calculate average mean depth statistics with vcftools 
+vcftools --bcf rustica_filtered4.bcf --site-mean-depth
+
+##Tthe vcftools output --site-mean-depth can be used to calculate average depth value across sites, 5% and 95% quantiles. In this case mean value is 4.5, 5% quantile is 2.1
+#filter for FMT/DP (setting the genotypes not fulfilling the criteria to missing). Here we used 9 as maximum value (twice the mean) and 2 as minimum value (5% quantile of the distribution) for read depth. Here we use the logical operator “|” to prevent every genotype at site to be set to missing when even only one genotype does not fulfill the threshold value
+bcftools filter -S . -e 'FMT/DP<2 | FMT/DP>9' -Ob -o rustica_filtered5.bcf rustica_filtered4.bcf
+
+#calculate individual missingness to identify samples with high proportion of missing genotypes
+vcftools --bcf rustica_filtered5.bcf --missing-indv
+
+#in this case there are no individuals with missingness higher than 70%.
+#in case some individuals (sample1 and sample2 in this example) have to be removed from the vcf, this is the command to use:
+bcftools view -s ^sample1,sample2 -Ob -o output.bcf input.bcf
+
+#remove variants with proportion of missing data per site higher than 0.1
+bcftools filter -e 'F_MISSING > 0.1' -Ob -o rustica_filtered6.bcf rustica_filtered5.bcf
+
+#set maf (minor allele frequency) threshold
+bcftools filter -e 'MAF < 0.05' -Ob -o rustica_filtered7.bcf rustica_filtered6.bcf
+
+#count variants number in the filtered vcf file
+bcftools view -H rustica_filtered7.bcf | wc -l
