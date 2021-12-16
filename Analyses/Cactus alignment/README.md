@@ -1,4 +1,4 @@
-## Scripts used for LD computation
+## Scripts used for generating the Cactus alignment and coverage calculation
 
 This folder contains the perl scripts used for LD computation. <br />
 
