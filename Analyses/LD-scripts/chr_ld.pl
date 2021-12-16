@@ -3,14 +3,14 @@
 use strict;
 ######################################################################################
 ###                                                                                ###
-###    Syntax: chr_ld.pl <input_filename> <window_size> [min-#-of-marker-pairs]    ###
+###    Syntax: chr_ld.pl <input_filename> <window-size> [min-#-of-marker-pairs]    ###
 ###                                                                                ###
 ######################################################################################
 my $filename = $ARGV[0]; # input filename
 my $wSize = $ARGV[1]; # window size
-my $mThreshold = 40; # Default minimum no. of marker-pairs for bin to be reported
+my $mThreshold = 40; # Default minimum no. of marker-pairs to compute window
 if ($ARGV[2]) {
-	$mThreshold = $ARGV[2]; # Set minimum # of marker-pairs for bin to be reported in output
+	$mThreshold = $ARGV[2]; # Set minimum # of marker-pairs to compute window
 }
 
 #  ======= check command line parameters ===================
@@ -44,7 +44,7 @@ while(<FH>){
 }
 close(FH);
 my $datestring = localtime();
-print "##############################################\n# inputfile: $filename\n# bin-size: ${wSize}bp\n";
+print "##############################################\n# inputfile: $filename\n# window-size: ${wSize}bp\n";
 print "# minimum no. of marker-pairs: $mThreshold\n";
 print "# $datestring\n##############################################\n\n";
 print "chr\tstart\tend\tR-squared\tD-prime\tmrk-pairs\n";
