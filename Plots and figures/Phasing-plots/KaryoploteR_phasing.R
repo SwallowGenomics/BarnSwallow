@@ -2,7 +2,7 @@ library(karyoploteR)
 library( VariantAnnotation)
 
 #generate custom genome
-costume.genome <- toGRanges("chr_list2.txt")
+costume.genome <- toGRanges("chr_list.txt")
 
 #set graphical parameters
 pp <- getDefaultPlotParams(plot.type=1)
@@ -10,7 +10,7 @@ pp$ideogramheight <- 150
 kp <- plotKaryotype(plot.type = 1, genome = costume.genome, plot.params = pp)
 
 
-kpPlotRegions(kp, data ="chr1.bed", col = "black", data.panel="ideogram", border=NA, r0=0, r1=1)		#Read bed information of chromosome and plot regions
+kpPlotRegions(kp, data ="chr1.txt", col = "black", data.panel="ideogram", border=NA, r0=0, r1=1)		#Read bed information of chromosome and plot regions
 kpText(kp, data = NULL, chr='chr1', labels= "77%, 156M", x=165000000, y=-0.65, cex=0.90)				#Add labels for percentage and chromosome dimension
 kpPlotRegions(kp, data ="chr2.txt", col = "black", data.panel="ideogram", border=NA, r0=0, r1=1)
 kpText(kp, data = NULL, chr='chr2', labels= "77%, 119M", x=127000000, y=-0.65, cex=0.90)
@@ -54,7 +54,7 @@ kpPlotRegions(kp, data ="chr21.txt", col = "black", data.panel="ideogram", borde
 kpText(kp, data=NULL, chr='chr21', labels = "67%, 9M", x=15500000, y=-0.65, cex=0.90)
 kpPlotRegions(kp, data ="chr22.txt", col = "black", data.panel="ideogram", border=NA, r0=0, r1=1)
 kpText(kp, data=NULL, chr='chr22', labels = "79%, 7M", x=15000000, y=-0.65, cex=0.90)
-kpPlotRegions(kp, data ="chr23.bed", col = "black", data.panel="ideogram", border=NA, r0=0, r1=1)
+kpPlotRegions(kp, data ="chr23.txt", col = "black", data.panel="ideogram", border=NA, r0=0, r1=1)
 kpText(kp, data=NULL, chr='chr23', labels="87%, 6M", x=15000000, y=-0.65, cex=0.90)
 kpPlotRegions(kp, data ="chr24.txt", col = "black", data.panel="ideogram", border=NA, r0=0, r1=1)
 kpText(kp, data=NULL, chr='chr24', labels = "73%, 6M", x=15000000, y=-0.65, cex=0.90)
