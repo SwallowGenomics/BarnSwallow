@@ -6,7 +6,7 @@ library(viridis)
 
 
 #import dataset
-phasing <- read_excel("phasing con chr in numeri e dimensione.xlsx")
+phasing <- read_excel("Phasing_chromosomes_percentage.xlsx")
 
 #convert to data.frame
 df <- as.data.frame(phasing3)
