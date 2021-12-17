@@ -3,7 +3,7 @@ use warnings;
 use strict;
 #################################################################
 ###                                                           ###
-###    Syntax: LDaverage.pl <input_filename> <bin-size>    ###
+###    Syntax: LDaverage.pl <input_filename> <bin-size>       ###
 ###                                                           ###
 #################################################################
 my $num_args = $#ARGV + 1;
@@ -15,7 +15,8 @@ if ($num_args != 2) {
 use Data::Dumper qw(Dumper);
 my $filename=$ARGV[0];
 my $wSize=$ARGV[1];
-my %binSize;
+my %Rbin;
+my %Dbin;
 my %LDvalue;
 my $counter;
 my $cSize;
@@ -29,21 +30,28 @@ while(<FH>){
 	 else {
 	   my @fields = split /\s+/, $_;
 	   $cSize = int(($fields[4] - $fields[1])/$wSize)*$wSize;
-	   push ( @{$binSize{ $cSize } }, $fields[6]);
+	   push ( @{$Rbin{ $cSize } }, $fields[6]);
+	   push ( @{$Dbin{ $cSize } }, $fields[7]);
 	}
 }
 close(FH);
-my ($sum,  $i, $avg);
+my ($Rsum, $Dsum, $i, $Ravg,$Davg);
 print "##############################################\n# inputfile: $filename\n# bin-size: ${wSize}bp\n";
 print "# $datestring\n##############################################\n\n";
-print "binStart\tbinEnd\tR2\tmrk-pairs\n";
-while (my($index,@elem) = each %binSize) {
-	$sum = 0; $i = 0;
-	foreach ( @{$binSize{ $index } }) {
-		$sum += $_;
+print "binStart\tbinEnd\tR-square\tD-value\tmrk-pairs\n";
+while (my($index,@elem) = each %Rbin) {
+	$Rsum = 0; $i = 0;
+	foreach ( @{$Rbin{ $index } }) {
+		$Rsum += $_;
 		$i++ ;
 	 }
-	 $avg = $sum/$i;
+	$Dsum = 0; $i = 0;
+	foreach ( @{$Dbin{ $index } }) {
+		$Dsum += $_;
+		$i++ ;
+	 }
+	 $Ravg = $Rsum/$i;
+	 $Davg = $Dsum/$i;
 	 my $end = $index +$wSize -1;
-	print "$index\t$end\t$avg\t$i\n";
+	print "$index\t$end\t$Ravg\t$Davg\t$i\n";
 }
