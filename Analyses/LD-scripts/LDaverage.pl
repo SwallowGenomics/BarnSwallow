@@ -17,14 +17,11 @@ my $filename=$ARGV[0];
 my $wSize=$ARGV[1];
 my %Rbin;
 my %Dbin;
-my %LDvalue;
-my $counter;
-my $cSize;
-my $maxDist = 100000; # max distance of markers to be considered
+my $cSize; ####### bin id = hash key
 my $datestring = localtime();
-open(FH, '<', $filename) or die $!;
 
-my $firstLine = 1;
+open(FH, '<', $filename) or die $!;
+my $firstLine = 1; ########## 1=header row in input file; 0=no header row
 while(<FH>){
 	if ($firstLine == 1) { $firstLine = 0;}
 	 else {
@@ -35,23 +32,24 @@ while(<FH>){
 	}
 }
 close(FH);
+
 my ($Rsum, $Dsum, $i, $Ravg,$Davg);
-print "##############################################\n# inputfile: $filename\n# bin-size: ${wSize}bp\n";
-print "# $datestring\n##############################################\n\n";
+print "##############################################\n#  inputfile: $filename\n#  bin-size: ${wSize}bp\n";
+print "#  date: $datestring\n##############################################\n\n";
 print "binStart\tbinEnd\tR-square\tD-value\tmrk-pairs\n";
-while (my($index,@elem) = each %Rbin) {
-	$Rsum = 0; $i = 0;
-	foreach ( @{$Rbin{ $index } }) {
+
+for my $key (sort { $Rbin{$a} <=> $Rbin{$b} } keys %Rbin) {
+	$Rsum = 0;
+	foreach ( @{$Rbin{ $key } }) {
 		$Rsum += $_;
-		$i++ ;
 	 }
-	$Dsum = 0; $i = 0;
-	foreach ( @{$Dbin{ $index } }) {
+	$Dsum = 0;
+	foreach ( @{$Dbin{ $key } }) {
 		$Dsum += $_;
-		$i++ ;
 	 }
+	 $i = scalar( @{ $Rbin{ $key } } );
 	 $Ravg = $Rsum/$i;
 	 $Davg = $Dsum/$i;
-	 my $end = $index +$wSize -1;
-	print "$index\t$end\t$Ravg\t$Davg\t$i\n";
+	 my $end = $key +$wSize -1;
+	print "$key\t$end\t$Ravg\t$Davg\t$i\n";
 }
