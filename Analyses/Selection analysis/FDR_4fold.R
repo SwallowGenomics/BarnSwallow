@@ -55,8 +55,8 @@ nrow(Bonferroni_acc) #6373
 nrow(Bonferroni_cons) #0
 
 write.table(bed_0.05, file="PhyloP_CHR_10bp_FDR_4fold.bed", sep = "\t", col.names=FALSE, row.names=FALSE)
-write.table(acc, file="PhyloP_CHR_10bp_FDR_4fold_ACC.bed", sep = "\t", col.names=FALSE, row.names=FALSE)
-write.table(cons, file="PhyloP_CHR_10bp_FDR_4fold_CONS.bed", sep = "\t", col.names=FALSE, row.names=FALSE)
+write.table(acc, file="PhyloP_ACC.bed", sep = "\t", col.names=FALSE, row.names=FALSE)
+write.table(cons, file="PhyloP_CONS.bed", sep = "\t", col.names=FALSE, row.names=FALSE)
 
 
 

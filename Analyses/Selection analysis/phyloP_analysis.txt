@@ -56,4 +56,4 @@ cat *.gff > phyloP_10bp.bed
 bedtools subtract -A -a PhyloP_10bp_ACC.bed -b GAPS.bed > PhyloP_10bp_ACC_NO_GAPS.bed 
 bedtools subtract -A -a PhyloP_10bp_CONS.bed -b GAPS.bed > PhyloP_10bp_ACC_NO_GAPS.bed 
 
-#10. Add id for each window using add_id_phyloP.R (needed for Extended Data Fig. 4 panel a and b) 
+#10. Add id for each window (needed for Extended Data Fig. 4 panel a and b) 
