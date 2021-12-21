@@ -1,4 +1,4 @@
-#Ortholog analysis on the pangenome
+## Ortholog analysis on the pangenome
 
 The analysis was performed using [halLiftover-postprocessing](https://github.com/pfenninglab/halLiftover-postprocessing)
 
