@@ -1,0 +1,8 @@
+#In the gff3 file from NCBI, transcript ids are not assigned to tRNAs, pseudogenes and C/V_gene_segments. Remove them from the annotation
+
+#1. make a list of genes to exclude
+grep -v '^#' ANNOTATION.gff | awk 'BEGIn{FS="\t";OFS="\t"}($3~/gene_segment/ || $2~/tRNA/ || $9~/pseudo=true/)' | grep -Po 'GeneID:\d+' | sort -u > genes_exclude.txt
+
+#2. prepare a new gff3 without these genes
+grep -f genes_exclude.txt -wv ANNOTATION.gff  > ANNOTATION_GENOMICFEATURES.gff
+
