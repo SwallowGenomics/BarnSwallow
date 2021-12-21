@@ -1,0 +1,8 @@
+To extract intergenic regions coordinates use:
+
+bedtools merge -i genes.bed > genes_merged.bed  #merge genes coordinates
+samtools faidx bHirRus1.fasta #index the reference genome
+cut -f1,2 bHirRus1.fasta.fai > bHirRus1_sizes.txt #extract scaffold sizes
+bedtools sort -i bHirRus1_sizes.txt > bHirRus1_sizes_sorted.txt #sort sizes
+bedtools sort -i genes_merged.bed > genes_merged_sorted.bed #sort genes
+bedtools complement -i genes_merged_sorted.bed -g bHirRus1_sizes_sorted.txt > intergenic.bed
