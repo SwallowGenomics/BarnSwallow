@@ -7,5 +7,3 @@ This folder contains the scripts and commands used to assembly the barn swallow 
 [Pangenome_assembly.txt](https://github.com/SwallowGenomics/BarnSwallow/blob/main/Analyses/Pangenome/Cactus_pangenome_pipeline.txt) containes the commands used to assemble the pangenome. The [Cactus pangenome pipeline documentation](https://github.com/ComparativeGenomicsToolkit/cactus/blob/master/doc/pangenome.md) was followed.
 
 The analysis was performed following [halLiftover-postprocessing](https://github.com/pfenninglab/halLiftover-postprocessing). 
-
-The [Ortholog_analysis](https://github.com/SwallowGenomics/BarnSwallow/tree/main/Analyses/Pangenome/Ortholog_analysis) folder contains the scripts used for that analysis.
