@@ -1,1 +1,43 @@
-#in progress
+#Use the genes coordinates generated with: https://github.com/SwallowGenomics/BarnSwallow/blob/main/Analyses/GenomicFeatures/create_regions_from_gencode_modified.R
+#Use only the 4 columns
+awk '{print $1, $2, $3, $4}' genes.bed > genes_4_col.bed
+
+#1. List genes coordinates of bHirRus1p on the other assemblies. Example with sample A1:
+
+#primary
+halLiftover ../Hirundo_pangenome.hal bHirRus1p genes_4_col.bed HrA1p HrA1p_liftover_genes.bed
+#alternate
+halLiftover ../Hirundo_pangenome.hal bHirRus1p genes_4_col.bed HrA1a HrA1a_liftover_genes.bed
+
+#2. Get the alignment depth for the query species :
+
+halAlignmentDepth --noAncestors --targetGenomes HrA1p,HrA2p,Hr2p,Hr3p,Hr4p,HrA1a,HrA2a,Hr2a,Hr3a,Hr4a --outWiggle coverage_pangenome.wig Hirundo_pangenome.hal bHirRus1p
+
+#3. convert the wig file into bigWig and the bedCov:
+
+wigToBigWig coverage_pangenome.wig bHirRus1.sizes coverage_pangenome.bw
+
+#4. Convert the alignment depth bigwig file to a bedgraph file:
+
+bigWigToBedGraph coverage_pangenome.bw coverage_pangenome.Bedgraph
+
+#5. Sort the bedgraph file by chromosome, start, end:
+sort -k1,1 -k2,2n -k3,3n coverage_pangenome.Bedgraph > coverage_pangenome_sorted.Bedgraph
+
+#6. Get the file that will be used for starting the ortholog extension for each region using the scores in the bedgraph file.
+
+python halLiftover-postprocessing/getMaxScorePositionFromBedgraph.py --bedFileName genes_4_col.bed --bedgraphFileName coverage_pangenome_sorted.Bedgraph --highestScoreLocationFileName highestScores_coverage_pangenome.bed
+
+#7. Use halLiftover to map the positions where the highest scores are recorded to the target species. This will create your -sFile for orthologFind.py. Example with sample A1:
+
+#primary
+halLiftover Hirundo_pangenome.hal bHirRus1p highestScores_coverage_pangenome.bed HrA1p HrA1p_liftover_genes_HALPER.bed
+#alternate
+halLiftover Hirundo_pangenome.hal bHirRus1p highestScores_coverage_pangenome.bed HrA1a HrA1a_liftover_genes_HALPER.bed
+
+#8. Run HALPER. Axample on sample A1:
+
+#primary
+python orthologFind.py -max_len 1151575 -min_len 60 -protect_dist 5 -qFile genes_4_col.bed -t HrA1p_liftover_genes.bed -sFile HrA1p_liftover_genes_HALPER.bed -oFile HrA1p_orthologFind.bed -mult_keepone 
+#alternate
+python orthologFind.py -max_len 1151575 -min_len 60 -protect_dist 5 -qFile genes_4_col.bed -t HrA1a_liftover_genes.bed -sFile HrA1a_liftover_genes_HALPER.bed -oFile HrA1a_orthologFind.bed -mult_keepone
