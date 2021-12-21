@@ -1,6 +1,6 @@
 ## Ortholog analysis on the pangenome
 
-The analysis was performed using [halLiftover-postprocessing](https://github.com/pfenninglab/halLiftover-postprocessing)
+The analysis was performed following [halLiftover-postprocessing](https://github.com/pfenninglab/halLiftover-postprocessing)
 
 Coverage and liftover of gene coordinates were performed with the [Hal Toolkit package](https://github.com/ComparativeGenomicsToolkit/hal).  <br />
 
