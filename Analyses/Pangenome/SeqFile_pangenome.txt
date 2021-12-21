@@ -1,0 +1,14 @@
+(bHirRus1:1.0,HrA1p:1.0,HrA1a:1.0,HrA2p:1.0,HrA2a:1.0,Hr2p:1.0,Hr2a:1.0,Hr3p:1.0,Hr3a:1.0,Hr4p:1.0,Hr4a:1.0,_MINIGRAPH_:1.0);
+
+bHirRus1p /path/to/bHirRus1_primary_masked_renamed.fasta    #reference primary
+bHirRus1a /path/to/bHirRus1_alternate_masked_renamed.fasta  #reference alternate
+HrA1p /path/to/A1_primary_purged_masked_renamed.fasta       #sample A1 primary
+HrA1a /path/to/A1_alternate_purged_masked_renamed.fasta     #sample A1 alternate
+HrA2p /path/to/A2_primary_purged_masked_renamed.fasta       #sample A2 primary
+HrA2a /path/to/A2_alternate_purged_masked_renamed.fasta     #sample A2 alternate
+Hr2p /path/to/2_primary_purged_masked_renamed.fasta         #sample 2 primary
+Hr2a /path/to/2_alternate_purged_masked_renamed.fasta       #sample 2 alternate
+Hr3p /path/to/3_primary_purged_masked_renamed.fasta         #sample 3 primary
+Hr3a /path/to/3_alternate_purged_masked_renamed.fasta       #sample 3 alternate
+Hr4p /path/to/4_primary_purged_masked_renamed.fasta         #sample 4 primary
+Hr4a /path/to/4_alternate_purged_masked_renamed.fasta       #sample 4 alternate

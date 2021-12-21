@@ -1,0 +1,24 @@
+#The pipeline used can be found here https://github.com/ComparativeGenomicsToolkit/cactus/blob/master/doc/pangenome.md
+
+#1. change contig names in the HiFi masked assemblies. The Hifiasm assemblies contigs has the same names for each individual. 
+
+#1.1. Order the contigs in each fasta file in ascending order and renamed them sequentially starting from 1:
+#Example on sample A1 (primary): A1_pri1, A1_pri2, A1_pri3, A1_pri4, ...
+#Example on sample A1 (alternate): A1_alt1, A1_alt2, A1_alt3, A1_alt4, ...
+#This is necessary for the pangenome construction.
+
+#1.2. Rename the chromosomes in the reference genome (primary and alternate) in order to find them easely in the pangenome:
+#Example on primary: chr1, chr2, chr3 ...
+#Example on alternate: contig1, contig2, contig3, ...
+
+#2. Generate minigraph
+
+minigraph -xggs -t 32 bHirRus1_primary_masked_renamed.fasta bHirRus1_alternate_masked_renamed.fasta A1_primary_purged_masked_renamed.fasta A1_alternate_purged_masked_renamed.fasta A2_primary_purged_masked_renamed.fasta A2_alternate_purged_masked_renamed.fasta 2_primary_purged_masked_renamed.fasta 2_alternate_purged_masked_renamed.fasta 3_primary_purged_masked_renamed.fasta 3_alternate_purged_masked_renamed.fasta 4_primary_purged_masked_renamed.fasta 4_alternate_purged_masked_renamed.fasta > Hirundo_pangenome.gfa
+
+#3. Align the sequences back to the graph
+
+cactus-graphmap --logError --logInfo --workDir=workDir /jobStore ./SeqFile_pangenome.txt Hirundo_pangenome.gfa Hirundo_pangenome.paf --outputFasta Hirundo_pangenome.gfa.fa
+
+#4. Create the cactus alignment from the seqfile and PAF, and export the output to vg.
+
+cactus-align --logError --logInfo --workDir=/workDir /jobStore ./SeqFile_pangenome.txt Hirundo_pangenome.paf Hirundo_pangenome.hal --pangenome --pafInput --outVG
