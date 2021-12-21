@@ -1,9 +1,6 @@
-if (!requireNamespace("BiocManager", quietly = TRUE))
-install.packages("BiocManager")
-BiocManager::install("GenomicFeatures")
+#BiocManager::install("GenomicFeatures")
 
 library("GenomicFeatures")
-setwd("E:/PhD/Genomica/PAPER BARN SWALLOW GENOMICS/CONFRONTO/CACTUS/PROVA3 - AURELIANO/ANNOTATION GENOMICFEATURES")
 
 #the script was modified from https://github.com/saketkc/gencode_regions
 
@@ -13,8 +10,8 @@ if (length(args)!=2){
 }
 suppressMessages(library(GenomicFeatures))
 suppressMessages(library(dplyr))
-gencode_gff <- read.csv("ANNOTATION_ALL_RENAMED_GENOMICFEATURES.gff")
-output_dir <- "E:/PhD/Genomica/PAPER BARN SWALLOW GENOMICS/CONFRONTO/CACTUS/PROVA3 - AURELIANO/ANNOTATION GENOMICFEATURES"
+gencode_gff <- read.csv("ANNOTATION_GENOMICFEATURES.gff")
+output_dir <- "your/ouput/dir"
 
 options(scipen=999)
 
@@ -55,7 +52,7 @@ unlist_obj <- function(obj) {
   return (unlist.obj) 
 }
 
-TxDb <- makeTxDbFromGFF("ANNOTATION_ALL_RENAMED_GENOMICFEATURES.gff")
+TxDb <- makeTxDbFromGFF("ANNOTATION_GENOMICFEATURES.gff")
 
 transcripts.data <- transcripts(TxDb, columns=c("tx_name", "gene_id"))
 anyDuplicated(elementMetadata(transcripts.data)$tx_name)
