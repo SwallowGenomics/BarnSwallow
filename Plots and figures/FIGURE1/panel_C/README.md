@@ -48,7 +48,7 @@ Replace spaces with tabs.
 Use the genes from GenomicFeatures with merged coordinates (bedtools merge).</br>
 Only chromosomes coordinates were mantained.</br>
 
-`bedtools intersect -c -a binned_genome_200k.bed -b genes_CHRs_merged.bed > genes_200k.bed 
+`bedtools intersect -c -a binned_genome_200k.bed -b genes_CHRs_merged.bed > genes_200k.bed`
 
 7. phyloP accelerated
 
