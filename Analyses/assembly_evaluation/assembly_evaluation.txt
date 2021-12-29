@@ -9,7 +9,7 @@ windowmasker -ustat stage1_bHirRus1p.counts -in bHirRus1_primary.fasta -outfmt f
 #3. RepeatMasker
 RepeatMasker -pa 32 -xsmall -species aves bHirRus1_primary.fasta -dir .
 
-#4. use the RepeatMasker .out file to generate a .bed file with repeats coordinates. Use this file to maske the windowmasker-masked genome:
+#4. use the RepeatMasker .out file to generate a .bed file with repeats coordinates. Use this file to mask the windowmasker-masked genome:
 
 bedtools maskfasta -soft -fi bHirRus1_primary_winmask.fasta -bed bHirRus1_primary_REPMASK_REPEATS.bed -fo bHirRus1_primary_masked.fasta 
 
