@@ -37,10 +37,10 @@ Only chromosomes coordinates were mantained.
 
 5. Repeats
 
-Use [generate_masked_ranges_mod.py](https://github.com/SwallowGenomics/BarnSwallow/blob/main/Plots%20and%20figures/FIGURE1/panel_C/generate_masked_ranges_mod.py) modified from [generate_masked_ranges_mod.py](https://www.danielecook.com/generate-a-bedfile-of-masked-ranges-a-fasta-file/) to obtain soft-masked coordinates from the genomes.
-`python2 generate_masked_ranges_mod.py bHirRus1_primary_masked.fasta > REPEATS.bed`
-`bedtools intersect -wao -a binned_genome_200k_3839.bed -b REPEATS.bed > REPEATS_200k_1.bed`
-`awk '{print $1, $2, $3, $7}' REPEATS_200k_1.bed > REPEATS_200k.bed`
+Use [generate_masked_ranges_mod.py](https://github.com/SwallowGenomics/BarnSwallow/blob/main/Plots%20and%20figures/FIGURE1/panel_C/generate_masked_ranges_mod.py) modified from [generate_masked_ranges_mod.py](https://www.danielecook.com/generate-a-bedfile-of-masked-ranges-a-fasta-file/) to obtain soft-masked coordinates from the genomes. </br>
+`python2 generate_masked_ranges_mod.py bHirRus1_primary_masked.fasta > REPEATS.bed` </br>
+`bedtools intersect -wao -a binned_genome_200k_3839.bed -b REPEATS.bed > REPEATS_200k_1.bed` </br>
+`awk '{print $1, $2, $3, $7}' REPEATS_200k_1.bed > REPEATS_200k.bed` </br>
 Replace spaces with tabs.
 
 6. Genes
