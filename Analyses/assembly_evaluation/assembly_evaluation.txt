@@ -1,1 +1,41 @@
-#available soon
+##SOFT-MASKING
+
+#1. soft-mask the purged genomes. Example on bHirRus1 primary assembly:
+
+#2. windowmasker
+windowmasker -mk_counts -in bHirRus1_primary.fasta -out stage1_bHirRus1p.counts 
+windowmasker -ustat stage1_bHirRus1p.counts -in bHirRus1_primary.fasta -outfmt fasta -out bHirRus1_primary_winmask.fasta 
+
+#3. RepeatMasker
+RepeatMasker -pa 32 -xsmall -species aves bHirRus1_primary.fasta -dir .
+
+#4. use the RepeatMasker .out file to generate a .bed file with repeats coordinates. Use this file to maske the windowmasker-masked genome:
+
+bedtools maskfasta -soft -fi bHirRus1_primary_winmask.fasta -bed bHirRus1_primary_REPMASK_REPEATS.bed -fo bHirRus1_primary_masked.fasta 
+
+##MERYL and MERQURY
+
+#1. run merqury to generate the Meryl database with the _submit_build.sh script included in the package modified according to your cluster. The script can be found here https://github.com/marbl/merqury/blob/master/_submit_build.sh 
+
+bash _submit_build_mod.sh 21 input_bHirRus1.fofn bHirRus1 
+
+#2. run Merqury with the Meryl database. Use the _submit_merqury.sh script included in the package modified according to your cluster. The script can be found here https://github.com/marbl/merqury/blob/master/_submit_merqury.sh
+
+#example on both haplotypes
+bash _submit_merqury_mod.sh bHirRus1.k21.meryl bHirRus1_primary_masked.fasta bHirRus1_alternate_masked.fasta bHirRus1
+
+##GENOMESCOPE
+
+#run Genomescope2.0 online (http://qb.cshl.edu/genomescope/genomescope2.0/) with 31 k-mers, uploading the .histo file outputted by the _submit_build_mod.sh script.
+
+##STATISTICS
+
+#run asm_stats.sh to obtain statistics before and after purging. Example on A1:
+
+asm_stats.sh bHirRus1_primary.fasta 1241727742 c #the genome size is the mean predicted size from Genomescope2.0
+
+##BUSCO
+
+#run BUSCO using a custom configuration file
+
+busco --config config_VERTEBRATA_bHirRus1_primary.ini

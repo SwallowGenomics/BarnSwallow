@@ -13,11 +13,11 @@ awk '/^S/{print ">"$2;print $3}' A1_trimmed.ccs.asm.p_ctg.gfa > A1_primary.fasta
 #3.2. alternate
 awk '/^S/{print ">"$2;print $3}' A1_trimmed.ccs.asm.a_ctg.gfa > A1_alternate.fasta 
 
-#4. run merqury to generate the Meryl database with the _submit_build.sh script included in the package modified according to your cluster. The script can be found here https://github.com/marbl/merqury/blob/master/_submit_build.sh. Example with sample A1 raw reads:
+#4. run merqury to generate the Meryl database with the _submit_build.sh script included in the package modified according to your cluster. The script can be found here https://github.com/marbl/merqury/blob/master/_submit_build.sh . Example with sample A1 raw reads:
 
 bash _submit_build_mod.sh 21 input_A1.fofn A1 
 
-#5. run Genomescope2.0 online (http://qb.cshl.edu/genomescope/genomescope2.0/) with 21 k-mers, uploading the .histo file outputted by the previous script.
+#5. run Genomescope2.0 online (http://qb.cshl.edu/genomescope/genomescope2.0/) with 31 k-mers, uploading the .histo file outputted by the previous script.
 
 #6. run purge dups with custom cutoffs for HiFi reads.The scripts can be found here https://github.com/VGP/vgp-assembly/tree/master/pipeline/purge_dups
 
@@ -47,7 +47,7 @@ asm_stats.sh A1_primary_purged.fasta 1060419062 c
 windowmasker -mk_counts -in A1_primary_purged.fasta -out stage1_A1p.counts 
 windowmasker -ustat stage1_A1p.counts -in A1_primary_purged.fasta -outfmt fasta -out A1_primary_purged_winmask.fasta 
 
-#8.2. repeatmasker
+#8.2. EepeatMasker
 RepeatMasker -pa 32 -xsmall -species aves A1_primary_purged.fasta -dir .
 
 #8.3. use the RepeatMasker .out file to generate a .bed file with repeats coordinates. Use this file to maske the windowmasker-masked genome:
