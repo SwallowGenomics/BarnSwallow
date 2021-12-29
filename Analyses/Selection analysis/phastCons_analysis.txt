@@ -58,5 +58,5 @@ bedtools subtract -A -f 0.2 -a most-conserved.bed -b GAPS.bed > most-conserved_N
 
 #8. Remove any remaining bases that fell into gaps
 
-bedtools subtract -a most-conserved_NO_GAPS.bed -b GAPS.bed > conserved_NO_GAPS_FINAL.bed 
+bedtools subtract -a most-conserved_NO_GAPS.bed -b GAPS.bed > most-conserved_NO_GAPS_FINAL.bed 
  
