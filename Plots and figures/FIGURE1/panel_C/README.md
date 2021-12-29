@@ -14,24 +14,24 @@ Tracks were obtained as following:
 
 2. pacBio coverage
 
-`minimap2 -t 32 -ax map-pb -L bHirRus1_primary.fasta PacBio.subreads.fastq | samtools view -b -S -@ 32 -o bHirRus1_primary_Pacbio_alignment.bam`
-`samtools sort -@ 32 bHirRus1_primary_Pacbio_alignment.bam -o bHirRus1_primary_Pacbio_alignment_sort.bam` 
-`samtools index -@ 32 bHirRus1_primary_Pacbio_alignment_sort.bam`
-`mosdepth --no-per-base -by 200000 Pacbio_cov_200k bHirRus1_primary_Pacbio_alignment_sort.bam`
+`minimap2 -t 32 -ax map-pb -L bHirRus1_primary.fasta PacBio.subreads.fastq | samtools view -b -S -@ 32 -o bHirRus1_primary_Pacbio_alignment.bam`</br>
+`samtools sort -@ 32 bHirRus1_primary_Pacbio_alignment.bam -o bHirRus1_primary_Pacbio_alignment_sort.bam` </br>
+`samtools index -@ 32 bHirRus1_primary_Pacbio_alignment_sort.bam`</br>
+`mosdepth --no-per-base -by 200000 Pacbio_cov_200k bHirRus1_primary_Pacbio_alignment_sort.bam`</br>
 Only chromosomes coordinates were mantained.
 
 3. GC content
 
-`bedtools nuc -fi bHirRus1_primary.fasta -bed binned_genome_200k.bed  > GC_CONTENT_200k_bedtools_nuc.bed`
-Only chromosomes coordinates were mantained.
-`awk '{print $1, $2, $3, $5*100}' GC_CONTENT_200k_bedtools_nuc.bed > GC_CONTENT_200k.bed`
+`bedtools nuc -fi bHirRus1_primary.fasta -bed binned_genome_200k.bed  > GC_CONTENT_200k_bedtools_nuc.bed`</br>
+Only chromosomes coordinates were mantained.</br>
+`awk '{print $1, $2, $3, $5*100}' GC_CONTENT_200k_bedtools_nuc.bed > GC_CONTENT_200k.bed`</br>
 Replace spaces with tabs and remove first row (header).
 
 
 4. CpG islands
 
-CpG islands were downloaded from the [UCSC browser CpG island track](https://hgdownload.soe.ucsc.edu/hubs/GCF/015/227/805/GCF_015227805.1/bbi/GCF_015227805.1_bHirRus1.pri.v2.cpgIslandExt.bb)
-Only chromosomes coordinates were mantained.
+CpG islands were downloaded from the [UCSC browser CpG island track](https://hgdownload.soe.ucsc.edu/hubs/GCF/015/227/805/GCF_015227805.1/bbi/GCF_015227805.1_bHirRus1.pri.v2.cpgIslandExt.bb)</br>
+Only chromosomes coordinates were mantained.</br>
 
 `bedtools intersect -c -a binned_genome_200k.bed -b CpG_ISLANDS_CHR.bed > CpG_ISLANDS_density_200k_n.bed` 
 
@@ -45,8 +45,8 @@ Replace spaces with tabs.
 
 6. Genes
 
-Use the genes from GenomicFeatures with merged coordinates (bedtools merge).
-Only chromosomes coordinates were mantained.
+Use the genes from GenomicFeatures with merged coordinates (bedtools merge).</br>
+Only chromosomes coordinates were mantained.</br>
 
 `bedtools intersect -c -a binned_genome_200k.bed -b genes_CHRs_merged.bed > genes_200k.bed 
 
@@ -60,11 +60,11 @@ Only chromosomes coordinates were mantained.
 
 9. phastCons CEs
 
-bedtools intersect -c -a binned_genome_200k.bed -b most-conserved_NO_GAPS_FINAL.bed > phastCons_CEs_200k.bed 
+`bedtools intersect -c -a binned_genome_200k.bed -b most-conserved_NO_GAPS_FINAL.bed > phastCons_CEs_200k.bed`
 
 10. HAL cov 
 
-The coverage was calculated from the [Cactus alignment](https://github.com/SwallowGenomics/BarnSwallow/tree/main/Analyses/Cactus_alignment) for barn swallow chromosome separately. Example on chr.1:
-`halAlignmentDepth --noAncestors --step 200000 --targetGenomes Camarhynchus_parvulus,Gallus_gallus,Lonchura_striata,Molothrus_ater,Motacilla_alba,Taeniopygia_guttata,Passer_domesticus --outWiggle coverage_10_genomes_chr1_200k.wig --refSequence chr1 10_genomes.hal Hirundo_rustica`
-`wig2bed < coverage_10_genomes_chr1_200k.wig > coverage_10_genomes_chr1_200k.bed`    
-`cat *bed > coverage_10_genomes_200k.bed`
+The coverage was calculated from the [Cactus alignment](https://github.com/SwallowGenomics/BarnSwallow/tree/main/Analyses/Cactus_alignment) for barn swallow chromosome separately. Example on chr.1:</br>
+`halAlignmentDepth --noAncestors --step 200000 --targetGenomes Camarhynchus_parvulus,Gallus_gallus,Lonchura_striata,Molothrus_ater,Motacilla_alba,Taeniopygia_guttata,Passer_domesticus --outWiggle coverage_10_genomes_chr1_200k.wig --refSequence chr1 10_genomes.hal Hirundo_rustica`</br>
+`wig2bed < coverage_10_genomes_chr1_200k.wig > coverage_10_genomes_chr1_200k.bed`    </br>
+`cat *bed > coverage_10_genomes_200k.bed`</br>
