@@ -4,7 +4,7 @@ This folder contains the R script to generate all panels of Supplementary figure
 
 The repeats input was not uploaded gived its big size.</br>
 
-GC content was calculated on the entire chromosomes like this:
+GC content was calculated on the entire chromosomes like this:</br>
 `bedtools nuc -fi bHirRus1_primary.fasta -bed chr_coords.bed > GC_CONTENT_1.bed`</br>
 `awk '{print $1, $2, $3, $5*100}' GC_CONTENT_1.bed > GC_CONTENT.bed`</br>
 Add back tabs.
