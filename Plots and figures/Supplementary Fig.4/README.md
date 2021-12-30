@@ -14,7 +14,7 @@ Only chromosomes coordinates were mantained.</br>
 
 Genes coordinates were taken from [GenomicFeatures analysis](https://github.com/SwallowGenomics/BarnSwallow/tree/main/Analyses/GenomicFeatures) and merged with `bedtools merge`</br>
 
-Repeats coordinates were generated as in [FIGURE1 panel b](https://github.com/SwallowGenomics/BarnSwallow/tree/main/Plots%20and%20figures/FIGURE1/panel_B)
+Repeats coordinates were generated as in [FIGURE1 panel c](https://github.com/SwallowGenomics/BarnSwallow/tree/main/Plots%20and%20figures/FIGURE1/panel_C)
 
 
 
