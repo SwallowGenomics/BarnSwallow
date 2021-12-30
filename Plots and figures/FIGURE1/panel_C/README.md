@@ -45,7 +45,7 @@ Replace spaces with tabs.
 
 6. Genes
 
-Use the genes from GenomicFeatures with merged coordinates (bedtools merge).</br>
+Use the genes from GenomicFeatures with merged coordinates (`bedtools merge`).</br>
 Only chromosomes coordinates were mantained.</br>
 
 `bedtools intersect -c -a binned_genome_200k.bed -b genes_CHRs_merged.bed > genes_200k.bed`
