@@ -11,7 +11,7 @@ halLiftover ../Hirundo_pangenome.hal bHirRus1p genes_4_col.bed HrA1a HrA1a_lifto
 
 #2. Get the alignment depth for the query species :
 
-halAlignmentDepth --noAncestors --targetGenomes HrA1p,HrA2p,Hr2p,Hr3p,Hr4p,HrA1a,HrA2a,Hr2a,Hr3a,Hr4a --outWiggle coverage_pangenome.wig Hirundo_pangenome.hal bHirRus1p
+halAlignmentDepth --noAncestors --targetGenomes bHirRus1a,HrA1p,HrA2p,Hr2p,Hr3p,Hr4p,HrA1a,HrA2a,Hr2a,Hr3a,Hr4a --outWiggle coverage_pangenome.wig Hirundo_pangenome.hal bHirRus1p
 
 #3. convert the wig file into bigWig and the bedCov:
 
