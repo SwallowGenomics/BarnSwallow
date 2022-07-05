@@ -1,6 +1,6 @@
 #The pipeline used can be found here https://github.com/ComparativeGenomicsToolkit/cactus/blob/master/doc/pangenome.md
 
-#1. change contig names in the HiFi masked assemblies. The Hifiasm assemblies contigs has the same names for each individual. 
+#1.  The Hifiasm assemblies contigs has the same names for each individual. Change contig names in the HiFi masked assemblies to help recognize the sample in the pangenome. 
 
 #1.1. Order the contigs in each fasta file in ascending order and renamed them sequentially starting from 1:
 #Example on sample A1 (primary): A1_pri1, A1_pri2, A1_pri3, A1_pri4, ...
