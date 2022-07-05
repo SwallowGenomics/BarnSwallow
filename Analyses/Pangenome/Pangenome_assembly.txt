@@ -22,3 +22,8 @@ cactus-graphmap --logError --logInfo --workDir=workDir /jobStore ./SeqFile_pange
 #4. Create the cactus alignment from the seqfile and PAF, and export the output to vg.
 
 cactus-align --logError --logInfo --workDir=/workDir /jobStore ./SeqFile_pangenome.txt Hirundo_pangenome.paf Hirundo_pangenome.hal --pangenome --pafInput --outVG
+
+#5. Modify the pangenome to flip nodes' strands to reduce the number of times paths change strands (GitHub solution: https://github.com/vgteam/sequenceTubeMap/issues/132)
+
+vg mod -t 32 -O Hirundo_pangenome.vg > Hirundo_pangenome_mod.vg
+vg index -p -t 32 -x Hirundo_pangenome_mod.xg Hirundo_pangenome_mod.vg
