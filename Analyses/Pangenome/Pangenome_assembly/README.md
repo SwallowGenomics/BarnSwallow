@@ -1,4 +1,4 @@
-## Pangenome assembly and ortholog analysis
+## Pangenome assembly
 
 This folder contains the scripts and commands used to assembly the barn swallow pangenome.
 
