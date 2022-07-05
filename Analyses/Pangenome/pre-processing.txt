@@ -47,9 +47,9 @@ asm_stats.sh A1_primary_purged.fasta 1060419062 c
 windowmasker -mk_counts -in A1_primary_purged.fasta -out stage1_A1p.counts 
 windowmasker -ustat stage1_A1p.counts -in A1_primary_purged.fasta -outfmt fasta -out A1_primary_purged_winmask.fasta 
 
-#8.2. EepeatMasker
+#8.2. RepeatMasker
 RepeatMasker -pa 32 -xsmall -species aves A1_primary_purged.fasta -dir .
 
-#8.3. use the RepeatMasker .out file to generate a .bed file with repeats coordinates. Use this file to maske the windowmasker-masked genome:
+#8.3. use the RepeatMasker .out file to generate a .bed file with repeats coordinates. Use this file to mask the windowmasker-masked genome:
 
 bedtools maskfasta -soft -fi A1_primary_purged_winmask.fasta -bed A1_primary_purged_REPMASK_REPEATS.bed -fo A1_primary_purged_masked.fasta 
