@@ -1,0 +1,34 @@
+#this script report the commands used to call variants from the 16 Illumina WGS barn swallow individuals.
+#for steps 1-3, this github solution was followed: https://github.com/vgteam/vg/issues/3411
+#for steps 4-9, the section "Calling the graph by first splitting into components" of this tutorial was followed:  https://github.com/vgteam/vg/wiki/Whole-genome-calling-and-genotyping
+
+#1. Chop nodes in the graph so they are not more than 256 bp and index the graph
+vg mod -t 32 -X 256 ../Hirundo_pangenome_mod.vg > Hirundo_pangenome_mod_chopped.vg
+vg index -t 32 -x Hirundo_mod_chopped.xg Hirundo_mod_chopped.vg
+
+#2. Prune the graph with kmer size 45 and index the graph
+vg prune -t 32 -k 45 Hirundo_mod_chopped.vg > Hirundo_pangenome_mod_chopped_pruned.vg
+vg index -t 32 -b /home/users/simona.secomandi/HirundoChernobyl/tmp -p -g Hirundo_pangenome_pri_alt_mod_chopped_pruned.gcsa Hirundo_pangenome_pri_alt_mod_chopped_pruned.vg
+
+#3. Align the 16 individuals Illumina WGS data 
+vg map -t 32 -f WGS_forward.fastq.gz -f WGS_reverse.fastq.gz -x Hirundo_pangenome_mod_chopped.xg -g Hirundo_pangenome_mod_chopped_pruned.gcsa > WGS_aln.gam
+
+#4. Index the graph with -L option
+vg index -t 32 -L -b /tmp Hirundo_pangenome_mod_chopped.vg -x Hirundo_pangenome_mod_chopped_new_L.xg
+
+#5. Extract the subgraph with CAMk2N2 coordinates (the path is bHirRus1p.Chr10; coordinates are 17272192-17276215, see Table S15)
+vg chunk -t 32 -x Hirundo_pangenome_mod_chopped_new_L.xg -c 2 -p bHirRus1p.Chr10:17272192-17276215 -O pg > CAMK2N2.pg
+
+#6. Augment the subgraph
+vg augment -t 32 CAMK2N2.pg WGS_aln.gam -s -A CAMK2N2_aug.gam > CAMK2N2_aug.pg
+
+#7. Compute the snarls
+vg snarls -t 32 CAMK2N2_aug.pg > CAMK2N2_aug.snarls
+
+#8. Compute the support
+vg pack -x CAMK2N2_aug.pg -g CAMK2N2_aug.gam -o CAMK2N2_aug.pack
+
+#9. Call variants
+vg call -t 32 CAMK2N2_aug.pg -k CAMK2N2_aug.pack -p bHirRus1p.Chr10 > CAMK2N2_bHirRus1p.Chr10.vcf 
+
+
