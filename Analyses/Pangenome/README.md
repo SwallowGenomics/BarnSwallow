@@ -6,4 +6,4 @@ This folder contains the scripts and commands used to assembly the barn swallow 
  
 [Pangenome_assembly.txt](https://github.com/SwallowGenomics/BarnSwallow/blob/main/Analyses/Pangenome/Cactus_pangenome_pipeline.txt) containes the commands used to assemble the pangenome. The [Cactus pangenome pipeline documentation](https://github.com/ComparativeGenomicsToolkit/cactus/blob/master/doc/pangenome.md) was followed.
 
-The final pangenome was modified and indexed with [vg][https://github.com/vgteam/vg] following the GitHub solution [#132](https://github.com/vgteam/sequenceTubeMap/issues/132)
+The final pangenome was modified and indexed with [vg](https://github.com/vgteam/vg) following the GitHub solution [#132](https://github.com/vgteam/sequenceTubeMap/issues/132)
