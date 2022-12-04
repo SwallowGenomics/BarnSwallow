@@ -23,3 +23,5 @@ Basewise coverage was calculated with the following command for each barn swallo
 Coverage was calculated with the following command for each barn swallow chromosome on 200kb windows (excluding the two species that didn't align):
 
 `halAlignmentDepth --noAncestors --step 200000 --targetGenomes Camarhynchus_parvulus,Gallus_gallus,Lonchura_striata,Molothrus_ater,Motacilla_alba,Taeniopygia_guttata,Passer_domesticus --outWiggle coverage_10_genomes_chr1_200k.wig --refSequence SUPER_1 ../../10_genomes.hal Hirundo_rustica`
+
+([Count_aligned_genomes.sh](Count_aligned_genomes.sh)) was used to calculate the number of genomes covering each bHirRus1 chromosomes base
