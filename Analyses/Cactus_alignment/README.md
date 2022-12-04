@@ -10,6 +10,11 @@ The next steps were computed with [Hal Toolkit package](https://github.com/Compa
 
 The alignment was evaluated with: `HalValidate 10_genomes.hal`  <br />
 
-Basewise coverage was calculated with the following command for each barn swallow chromosome:
+To calculate how many bases of each genome aligned to bHirRus1, the next commands were used:
+`halAlignmentDepth --noAncestors --outWiggle coverage_10_genomes_Camarhynchus.wig --targetGenomes Camarhynchus_parvulus 10_genomes.hal Hirundo_rustica`
+`wig2bed < coverage_10_genomes_Camarhynchus.wig > coverage_10_genomes_Camarhynchus.bed`
+`grep "1" coverage_10_genomes_Camarhynchus.wi | grep -v "fixed" | wc -l`
+
+Basewise coverage was calculated with the following command for each barn swallow chromosome (excluding the two species that didn't align):
 
 `halAlignmentDepth --noAncestors --targetGenomes Camarhynchus_parvulus,Gallus_gallus,Lonchura_striata,Molothrus_ater,Motacilla_alba,Taeniopygia_guttata,Passer_domesticus --outWiggle coverage_10_genomes_chr1.wig --refSequence chr1 10_genomes.hal Hirundo_rustica`  <br /> 
