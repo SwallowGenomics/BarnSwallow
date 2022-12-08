@@ -1,4 +1,4 @@
-# BarnSwallow
+# Barn Swallow pangenome paper
 ## Description
 
 This repository contains all the scripts relative to the barn swallow genomics project. <br />
