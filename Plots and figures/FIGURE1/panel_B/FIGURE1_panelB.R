@@ -5,7 +5,7 @@ table <- read.table("sizes_and_estimations.txt", header=TRUE)
 library(ggplot2)
 library(ggrepel)
 
-pdf("FIGURE2_panelB.pdf", width = 8, height = 5)
+pdf("FIGURE1_panelB.pdf", width = 8, height = 5)
 
 ggplot(stime, aes(x=size, y=mean, label=chr, color=type)) +
   geom_smooth(method=lm, color="dark grey", size=0.6) +
