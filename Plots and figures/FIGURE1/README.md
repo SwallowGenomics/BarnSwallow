@@ -1,3 +1,3 @@
-## FIGURE1
+## FIGURE2
 
-This folder contains the R scripts and example files for Figure 1 panels b and c
+This folder contains the R scripts and example files for Figure 2 panels B and C
