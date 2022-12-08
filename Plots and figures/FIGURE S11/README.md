@@ -1,2 +1,3 @@
 The R file present in this folder contains the commands used to generate the panels composing Figure S11. The input excel dataset files cited in the script are the output file of the script (https://github.com/SwallowGenomics/BarnSwallow/blob/main/Analyses/LD-scripts/LD_chrom_end.pl) computing the average LD value in bins of specified length at increasing distance form chromosome/contig ends. <br />
-midpoint refers to the midpoint of each bin size, that was used to plot the corresponding average LD value.
+midpoint refers to the midpoint of each bin size, that was used to plot the corresponding average LD value. <br>
+The excel file (macro_Egy) is provided as an example input file.
