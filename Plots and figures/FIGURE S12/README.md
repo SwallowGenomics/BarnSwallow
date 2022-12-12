@@ -1,0 +1,1 @@
+See this [script](https://github.com/SwallowGenomics/BarnSwallow/blob/main/Analyses/iHS%20analysis/iHS_analysis_script.R) for the commands used to generate the manhattan plots in Figure S12.
