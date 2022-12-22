@@ -1,4 +1,4 @@
-## Extended data fig. 2 - Mitogenome
+## Figure S1 - Mitogenome
 
 This folder contains the R script and input files to reproduce Figure S1. </br>
 
