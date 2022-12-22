@@ -1,6 +1,6 @@
 ## Figure S2 - correlations
 
-This folder contains the R script to generate all panels of Supplementary figure 4. Some modifications in the final figure were done manually. </br>
+This folder contains the R script to generate all panels of Figure S2. Some modifications in the final figure were done manually. </br>
 
 The repeats input was not uploaded gived its big size.</br>
 
